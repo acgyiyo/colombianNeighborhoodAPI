@@ -1,37 +1,41 @@
 package com.acgyiyo.colombianneighborhood.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
 
 @Entity
-@Table(name = "departamentos")
+@Table(name = "barrios")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Data
-public class Department {
+public class Neighborhood {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
+  @Column(name = "id_alcaldia")
+  private String idTownHall;
+
+  @Column(name = "comuna")
+  private Integer commune;
+
   @Column(name = "nombre")
   private String name;
 
-  // en el mappedBy va el nombre del campo en la otra clase no el nombre del campo
-  // de la BD
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "department", cascade = CascadeType.ALL)
-  private List<City> cityList;
+  @JoinColumn(name = "municipio", referencedColumnName = "id")
+  @ManyToOne(fetch = FetchType.LAZY)
+  private City city;
 }
