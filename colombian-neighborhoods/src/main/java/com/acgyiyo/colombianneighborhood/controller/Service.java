@@ -1,5 +1,7 @@
 package com.acgyiyo.colombianneighborhood.controller;
 
+import java.util.List;
+
 import com.acgyiyo.colombianneighborhood.model.City;
 import com.acgyiyo.colombianneighborhood.model.Department;
 import com.acgyiyo.colombianneighborhood.repository.CityRepository;
@@ -31,8 +33,19 @@ public class Service {
     return depRepo.findById(id).get();
   }
 
+  @GetMapping("/departmentName/{name}")
+  public List<Department> findDepartmentByName(@PathVariable("name") String name) {
+    return depRepo.findbyName(name);
+  }
+
   @GetMapping("/city/{id}")
   public City findCityById(@PathVariable("id") Integer id) {
     return cityRepo.findById(id).get();
   }
+
+  @GetMapping("/cities/{name}")
+  public List<City> findCityByName(@PathVariable("name") String name) {
+    return cityRepo.findCityByName(name);
+  }
+
 }

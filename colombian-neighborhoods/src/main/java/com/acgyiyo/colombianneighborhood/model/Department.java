@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,6 +22,7 @@ import lombok.Data;
 @Table(name = "departamentos")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Data
+@NamedQuery(name = "Department.findbyName", query = "SELECT e FROM Department e WHERE name like CONCAT('%',:name,'%')")
 public class Department {
 
   @Id

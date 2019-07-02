@@ -9,7 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.LockModeType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,9 +24,11 @@ import lombok.Data;
 
 @Entity
 @Table(name = "municipios")
-@Data
-//esta propiedad ayuda a que no se genere una referencia circular entre departamento y municipio
+// esta propiedad ayuda a que no se genere una referencia circular entre
+// departamento y municipio
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Data
+@NamedQuery(name = "City.findCityByName", query = "SELECT e FROM City e where name like CONCAT('%',:name,'%')")
 public class City {
 
   @Id
@@ -36,11 +40,13 @@ public class City {
 
   @JoinColumn(name = "departamento", referencedColumnName = "id")
   @ManyToOne(fetch = FetchType.LAZY)
-  //con esta propiedad garantizamos que la serialización no se haga antes de que la carga lazy de hibernate termine
-  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+  // con esta propiedad garantizamos que la serialización no se haga antes de que
+  // la carga lazy de hibernate termine
+  @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
   private Department department;
 
-  //en el mappedBy va el nombre del campo en la otra clase no el nombre del campo de la BD
+  // en el mappedBy va el nombre del campo en la otra clase no el nombre del campo
+  // de la BD
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "city")
   @JsonManagedReference
   private List<Neighborhood> neighborhoodList;
