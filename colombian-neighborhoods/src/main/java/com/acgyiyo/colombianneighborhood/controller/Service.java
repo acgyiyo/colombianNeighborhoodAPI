@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.acgyiyo.colombianneighborhood.model.City;
 import com.acgyiyo.colombianneighborhood.model.Department;
+import com.acgyiyo.colombianneighborhood.model.Neighborhood;
 import com.acgyiyo.colombianneighborhood.repository.CityRepository;
 import com.acgyiyo.colombianneighborhood.repository.DepartmentRepository;
+import com.acgyiyo.colombianneighborhood.repository.NeighborhoodRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,9 @@ public class Service {
 
   @Autowired
   private CityRepository cityRepo;
+
+  @Autowired
+  private NeighborhoodRepository neighRepo;
 
   @GetMapping
   public String welcome() {
@@ -46,6 +51,11 @@ public class Service {
   @GetMapping("/cities/{name}")
   public List<City> findCityByName(@PathVariable("name") String name) {
     return cityRepo.findCityByName(name);
+  }
+
+  @GetMapping("/neighborhoods/{name}")
+  public List<Neighborhood> findNeighborhoodByName(@PathVariable("name") String name) {
+    return neighRepo.findNeighborhoodByName(name);
   }
 
 }

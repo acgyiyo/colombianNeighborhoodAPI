@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -18,6 +19,7 @@ import lombok.Data;
 @Entity
 @Table(name = "barrios")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@NamedQuery(name = "Neighborhood.findNeighborhoodByName", query = "SELECT e FROM Neighborhood e where name like CONCAT('%',:name,'%')")
 @Data
 public class Neighborhood {
 
