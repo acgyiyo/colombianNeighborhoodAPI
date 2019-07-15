@@ -12,6 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
@@ -36,6 +37,10 @@ public class Neighborhood {
   @Column(name = "nombre")
   private String name;
 
+    
+  // con esta propiedad garantizamos que la serialización no se haga antes de que
+  // la carga lazy de hibernate termine
+  @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
   @JoinColumn(name = "municipio", referencedColumnName = "id")
   @ManyToOne(fetch = FetchType.LAZY)
   private City city;

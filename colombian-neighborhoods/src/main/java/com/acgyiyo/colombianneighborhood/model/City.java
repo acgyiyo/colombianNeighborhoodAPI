@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.LockModeType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -40,6 +39,7 @@ public class City {
 
   @JoinColumn(name = "departamento", referencedColumnName = "id")
   @ManyToOne(fetch = FetchType.LAZY)
+  
   // con esta propiedad garantizamos que la serialización no se haga antes de que
   // la carga lazy de hibernate termine
   @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
